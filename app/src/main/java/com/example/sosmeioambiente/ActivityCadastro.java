@@ -46,8 +46,7 @@ public class ActivityCadastro extends AppCompatActivity {
                     u.setSenha(senha1);
                     db.usuarioDao().insertAll(u);
                     Toast.makeText(ActivityCadastro.this, "Usuário Salvo.", Toast.LENGTH_SHORT).show();
-                    Intent intent3 = new Intent(ActivityCadastro.this, ActivityPrincipal.class);
-                    startActivity(intent3);
+                    navegaPrincipal();
                 } else {
                     Toast.makeText(ActivityCadastro.this, "Email já cadastrado. Entrar em contato com a Administração.", Toast.LENGTH_SHORT).show();
                 }
@@ -57,5 +56,10 @@ public class ActivityCadastro extends AppCompatActivity {
         } else {
             Toast.makeText(ActivityCadastro.this, "Todos os dados são obrigatórios.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void navegaPrincipal() {
+        Intent intent3 = new Intent(ActivityCadastro.this, ActivityPrincipal.class);
+        startActivity(intent3);
     }
 }

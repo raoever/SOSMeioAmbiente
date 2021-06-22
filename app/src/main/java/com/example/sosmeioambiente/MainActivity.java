@@ -75,4 +75,9 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Email e Senha são obrigatórios.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void navegacaoAnomimo(View view) {
+        Intent intent4 = new Intent(MainActivity.this, ActivityPrincipal.class);
+        startActivity(intent4);
+    }
 }

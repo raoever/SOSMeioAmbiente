@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.room.Room;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,9 +33,13 @@ public class ActivityPrincipal extends AppCompatActivity {
 
         ControleSessao controleSessao = new ControleSessao(ActivityPrincipal.this);
         int idUsuario = controleSessao.pegaSessao();
-        Log.i("onCreate1: ", "id "+String.valueOf(idUsuario));
-        Usuario byId = db.usuarioDao().findById(idUsuario);
-        textViewBemVindo.setText("Bem Vindo "+byId.getNome());
+        if (idUsuario != -1){
+            Usuario byId = db.usuarioDao().findById(idUsuario);
+            textViewBemVindo.setText("Bem Vindo "+byId.getNome());
+        } else {
+//            toolbar.getMenu().findItem(R.id.minhasDenuncias).setVisible(false);
+        }
+
 
     }
 
