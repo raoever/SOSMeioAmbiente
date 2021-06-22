@@ -16,8 +16,7 @@ public class Usuario {
     private String email;
     @ColumnInfo(name = "senha")
     private String senha;
-//    @ColumnInfo(name = "denuncias")
-//    private List<Denuncia> denuncias;
+
 
     public Usuario() {
     }
