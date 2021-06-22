@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">SOSMeioAmbiente</string>
+    <string name="statusAcompanha">Observação: O número do protocolo é necessário para o acompanhamento da Denúncia.</string>
+    <string name="observacaoDenuncia">Observação: O número do protocolo é necessário para o acompanhamento da Denúncia.</string>
+    <string-array name="tipos">
+        <item>Tipo</item>
+        <item>Maus Tratos</item>
+        <item>Queimada</item>
+        <item>Poluição</item>
+        <item>Outros</item>
+    </string-array>
+    <string-array name="comentario">
+        <item>Tipo</item>
+        <item>Elogio</item>
+        <item>Reclamação</item>
+        <item>Sugestão</item>
+        <item>Outros</item>
+    </string-array>
+</resources>
