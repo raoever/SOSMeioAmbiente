@@ -41,13 +41,13 @@ public class ActivityCadastro extends AppCompatActivity {
             if (senha1.equals(senha2)){
                 if (db.usuarioDao().findByEmail(emailCadastro) == null){
                     u = new Usuario();
-                    u.setSenha(nomeCompleto);
+                    u.setNome(nomeCompleto);
                     u.setEmail(emailCadastro);
                     u.setSenha(senha1);
                     db.usuarioDao().insertAll(u);
                     Toast.makeText(ActivityCadastro.this, "Usuário Salvo.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(ActivityCadastro.this, ActivityPrincipal.class);
-                    startActivity(intent);
+                    Intent intent3 = new Intent(ActivityCadastro.this, ActivityPrincipal.class);
+                    startActivity(intent3);
                 } else {
                     Toast.makeText(ActivityCadastro.this, "Email já cadastrado. Entrar em contato com a Administração.", Toast.LENGTH_SHORT).show();
                 }

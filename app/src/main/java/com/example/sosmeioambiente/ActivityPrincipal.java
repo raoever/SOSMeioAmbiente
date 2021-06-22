@@ -3,15 +3,21 @@ package com.example.sosmeioambiente;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ActivityPrincipal extends AppCompatActivity {
+    TextView textViewBemVindo;
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +27,15 @@ public class ActivityPrincipal extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("SOS Meio Ambiente");
+        textViewBemVindo = findViewById(R.id.textViewBemVindo);
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "dbUsuario").allowMainThreadQueries().build();
+
+        ControleSessao controleSessao = new ControleSessao(ActivityPrincipal.this);
+        int idUsuario = controleSessao.pegaSessao();
+        Log.i("onCreate1: ", "id "+String.valueOf(idUsuario));
+        Usuario byId = db.usuarioDao().findById(idUsuario);
+        textViewBemVindo.setText("Bem Vindo "+byId.getNome());
+
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.sosmeioambiente;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextEmail, editTextSenha;
     private Button buttonEntrar;
     private TextView textViewCadastro, textViewAnonimo;
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         buttonEntrar = findViewById(R.id.buttonEntrar);
         textViewCadastro = findViewById(R.id.textViewCadastro);
         textViewAnonimo = findViewById(R.id.textViewAnonimo);
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "dbUsuario").allowMainThreadQueries().build();
     }
 
     @Override
@@ -49,19 +52,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void entrar(View view) {
-        if ((!editTextEmail.getText().toString().equals("")) && (!editTextSenha.getText().toString().equals(""))){
+        String email = editTextEmail.getText().toString();
+        String senha = editTextSenha.getText().toString();
+        if ((!email.equals("")) && (!senha.equals(""))){
             Usuario u = new Usuario();
-            u.setEmail(editTextEmail.getText().toString());
-            u.setSenha(editTextSenha.getText().toString());
-
-            if (true){
-                ControleSessao controleSessao = new ControleSessao(MainActivity.this);
-                controleSessao.salvaSessao(u);
-                navegacaoPrincipal();
+            u.setEmail(email);
+            u.setSenha(senha);
+            if (db.usuarioDao().findByEmail(email) != null){
+                Usuario uExistente = new Usuario();
+                uExistente = db.usuarioDao().findByEmail(email);
+                if (uExistente.getSenha().equals(senha)){
+                    ControleSessao controleSessao = new ControleSessao(MainActivity.this);
+                    controleSessao.salvaSessao(uExistente);
+                    navegacaoPrincipal();
+                } else {
+                    Toast.makeText(MainActivity.this, "Email e/ou Senha não Conferem.", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Toast.makeText(MainActivity.this, "Email e/ou Senha não Encontrados.", Toast.LENGTH_SHORT).show();
             }
-
         } else {
             Toast.makeText(MainActivity.this, "Email e Senha são obrigatórios.", Toast.LENGTH_SHORT).show();
         }
