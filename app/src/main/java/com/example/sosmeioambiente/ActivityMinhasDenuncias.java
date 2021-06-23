@@ -16,8 +16,7 @@ import java.util.List;
 
 public class ActivityMinhasDenuncias extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private ListView listViewMinhasDenuncias;
-    private List<String> listaDados;
-    private ArrayAdapter adapter;
+    private ArrayAdapter<Denuncia> adapter;
     private AppDatabase db;
 
     @Override
@@ -26,36 +25,13 @@ public class ActivityMinhasDenuncias extends AppCompatActivity implements Adapte
         setContentView(R.layout.activity_minhas_denuncias);
 
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "dbSosMeioAmbiente").allowMainThreadQueries().build();
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.comentario, android.R.layout.simple_list_item_1);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         listViewMinhasDenuncias = findViewById(R.id.listViewMinhasDenuncais);
-        preencherLista();
-        preencherAdapter();
-        listViewMinhasDenuncias.setOnItemClickListener(this);
-
-    }
-
-    private void preencherAdapter() {
-        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, listaDados);
-        listViewMinhasDenuncias.setAdapter(adapter);
-    }
-
-    private void preencherLista() {
-        listaDados = new ArrayList<>();
-        listaDados = pegaDados();
-    }
-
-    private List<String> pegaDados() {
-        List<String> denunciasTexto = new ArrayList<>();
-        List<Denuncia> denuncias = new ArrayList<>();
         ControleSessao controleSessao = new ControleSessao(ActivityMinhasDenuncias.this);
         int idUsuario = controleSessao.pegaSessao();
-        denuncias = db.denunciaDao().findByIdUsuario(idUsuario);
-        for (Denuncia denuncia :
-                denuncias) {
-            denunciasTexto.add(denuncia.toString());
-        }
-        return denunciasTexto;
+        ArrayList<Denuncia> dados = (ArrayList<Denuncia>) db.denunciaDao().findByIdUsuario(idUsuario);
+        adapter = new ArrayAdapter<Denuncia>(this, android.R.layout.simple_list_item_1, dados);
+        listViewMinhasDenuncias.setAdapter(adapter);
+        listViewMinhasDenuncias.setOnItemClickListener(this);
     }
 
     public void irHome(View view) {

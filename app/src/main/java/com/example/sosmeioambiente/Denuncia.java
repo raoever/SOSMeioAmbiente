@@ -116,7 +116,8 @@ public class Denuncia implements Serializable {
 
     @Override
     public String toString() {
-        return "Protocolo= " + protocolo + '\n' +
+        return "Id= " + idUsuario + '\n' +
+                "Protocolo= " + protocolo + '\n' +
                 "Tipo= " + tipo + '\n' +
                 "Endereco= " + endereco + '\n' +
                 "Descricao= " + descricao + '\n' +

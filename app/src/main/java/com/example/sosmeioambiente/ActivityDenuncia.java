@@ -53,10 +53,11 @@ public class ActivityDenuncia extends AppCompatActivity implements AdapterView.O
         editTextDescricao = findViewById(R.id.editTextDescricao);
         ivFoto = findViewById(R.id.ivFoto);
         spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipos, android.R.layout.simple_list_item_1);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        ArrayAdapter<CharSequence> adapterSninner = ArrayAdapter.createFromResource(this, R.array.tipos, android.R.layout.simple_list_item_1);
+        adapterSninner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapterSninner);
         spinner.setOnItemSelectedListener(this);
+
         textViewLatitude = findViewById(R.id.textViewLatitude);
         textViewLongitude = findViewById(R.id.textViewLongitude);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);

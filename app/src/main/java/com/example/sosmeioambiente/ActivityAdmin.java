@@ -15,8 +15,7 @@ import java.util.List;
 
 public class ActivityAdmin extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private ListView listViewDenuncias;
-    private List<String> listaDados;
-    private ArrayAdapter adapter;
+    private ArrayAdapter<Denuncia> adapter;
     private AppDatabase db;
 
     @Override
@@ -25,33 +24,11 @@ public class ActivityAdmin extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_admin);
 
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "dbSosMeioAmbiente").allowMainThreadQueries().build();
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.comentario, android.R.layout.simple_list_item_1);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         listViewDenuncias = findViewById(R.id.listViewDenuncias);
-        preencherLista();
-        preencherAdapter();
-        listViewDenuncias.setOnItemClickListener(this);
-    }
-
-    private void preencherAdapter() {
-        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, listaDados);
+        ArrayList<Denuncia> dados = (ArrayList<Denuncia>) db.denunciaDao().getAll();
+        adapter = new ArrayAdapter<Denuncia>(this, android.R.layout.simple_list_item_1, dados);
         listViewDenuncias.setAdapter(adapter);
-    }
-
-    private void preencherLista() {
-        listaDados = new ArrayList<>();
-        listaDados = pegaDados();
-    }
-
-    private List<String> pegaDados() {
-        List<String> denunciasTexto = new ArrayList<>();
-        List<Denuncia> denuncias;
-        denuncias = db.denunciaDao().getAll();
-        for (Denuncia denuncia :
-                denuncias) {
-            denunciasTexto.add(denuncia.toString());
-        }
-        return denunciasTexto;
+        listViewDenuncias.setOnItemClickListener(this);
     }
 
     public void irHome(View view) {
