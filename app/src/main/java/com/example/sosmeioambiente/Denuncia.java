@@ -116,16 +116,12 @@ public class Denuncia implements Serializable {
 
     @Override
     public String toString() {
-        return "Denuncia{" +
-                "id=" + id +
-                ", idUsuario=" + idUsuario +
-                ", protocolo='" + protocolo + '\'' +
-                ", tipo='" + tipo + '\'' +
-                ", endereco='" + endereco + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", latitude='" + latitude + '\'' +
-                ", longitude='" + longitude + '\'' +
-                ", acompanhamento='" + acompanhamento + '\'' +
-                '}';
+        return "Protocolo= " + protocolo + '\n' +
+                "Tipo= " + tipo + '\n' +
+                "Endereco= " + endereco + '\n' +
+                "Descricao= " + descricao + '\n' +
+                "Latitude= " + latitude + '\n' +
+                "Longitude= " + longitude + '\n' +
+                "Acompanhamento= " + acompanhamento;
     }
 }

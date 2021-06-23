@@ -1,77 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ActivityComentario">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="SOS Meio Ambiente"
-        android:textStyle="italic"
-        android:textColor="@color/black"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ActivityComentario">
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Elogio/Reclamação"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@color/black"
-        android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:text="SOS Meio Ambiente"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/black"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView1" />
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:text="Elogio/Reclamação"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/black"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <EditText
-        android:id="@+id/editTextRegistro"
-        android:layout_width="300dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="16dp"
-        android:hint="Texto"
-        android:padding="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="200dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
-    <Button
-        android:id="@+id/buttonRegistrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:onClick="registrar"
-        android:text="Registrar"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextRegistro" />
+        <EditText
+            android:id="@+id/editTextRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_horizontal"
+            android:hint="Texto"
+            android:padding="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
-    <ListView
-        android:layout_width="409dp"
-        android:layout_height="322dp"
-        android:id="@+id/listViewRegistros"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRegistrar" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/buttonRegistrar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:onClick="registrar"
+                android:text="Registrar"
+                android:layout_marginRight="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/buttonRegistrar2"
+                app:layout_constraintTop_toBottomOf="@+id/editTextRegistro" />
+
+            <Button
+                android:id="@+id/buttonRegistrar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="home"
+                android:text="Home"
+                android:layout_marginLeft="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintEnd_toStartOf="@+id/buttonRegistrar"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextRegistro" />
+
+        </LinearLayout>
+
+
+        <ListView
+            android:id="@+id/listViewRegistros"
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonRegistrar" />
+
+    </LinearLayout>
+</ScrollView>

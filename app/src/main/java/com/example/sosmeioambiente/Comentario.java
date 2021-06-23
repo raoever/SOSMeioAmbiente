@@ -50,10 +50,7 @@ public class Comentario implements Serializable {
 
     @Override
     public String toString() {
-        return "Comentario{" +
-                "id=" + id +
-                ", tipo='" + tipo + '\'' +
-                ", registro='" + registro + '\'' +
-                '}';
+        return "Tipo= " + tipo + '\n' +
+                "Registro= " + registro;
     }
 }

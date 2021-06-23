@@ -21,13 +21,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ActivityComentario extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class ActivityComentario extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
     private Spinner spinner2;
     private EditText editTextRegistro;
     private ListView listViewRegistros;
-    private List<String> listaDados;
-    private ArrayAdapter adapter;
-    private Button buttonRegistrar;
+    private ArrayAdapter<Comentario> adapter;
     private AppDatabase db;
 
     @Override
@@ -36,26 +34,20 @@ public class ActivityComentario extends AppCompatActivity implements AdapterView
         setContentView(R.layout.activity_comentario);
 
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "dbSosMeioAmbiente").allowMainThreadQueries().build();
+
         editTextRegistro = findViewById(R.id.editTextRegistro);
         spinner2 = (Spinner) findViewById(R.id.spinner2);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.comentario, android.R.layout.simple_list_item_1);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner2.setAdapter(adapter);
+        ArrayAdapter<CharSequence> adapterSpinner = ArrayAdapter.createFromResource(this, R.array.comentario, android.R.layout.simple_list_item_1);
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner2.setAdapter(adapterSpinner);
+        spinner2.setOnItemSelectedListener(this);
+
         listViewRegistros = findViewById(R.id.listViewRegistros);
-        preencherLista();
-        preencherAdapter();
+        ArrayList<Comentario> dados = (ArrayList<Comentario>) db.comentarioDao().getAll();
+        adapter = new ArrayAdapter<Comentario>(this, android.R.layout.simple_list_item_1, dados);
+        listViewRegistros.setAdapter(adapter);
         listViewRegistros.setOnItemClickListener(this);
 
-    }
-
-    private void preencherAdapter() {
-        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, listaDados);
-        listViewRegistros.setAdapter(adapter);
-    }
-
-    private void preencherLista() {
-        listaDados = new ArrayList<>();
-        listaDados = Collections.singletonList(db.comentarioDao().getAll().toString());
     }
 
     public void registrar(View view) {
@@ -85,6 +77,21 @@ public class ActivityComentario extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    public void home(View view) {
+        Intent intent = new Intent(ActivityComentario.this, ActivityPrincipal.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }
