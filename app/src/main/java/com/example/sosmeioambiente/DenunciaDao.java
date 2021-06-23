@@ -19,6 +19,9 @@ public interface DenunciaDao {
     @Query("SELECT * FROM denuncia WHERE id LIKE :denunciaId LIMIT 1")
     Denuncia findById(int denunciaId);
 
+    @Query("SELECT * FROM denuncia WHERE idUsuario LIKE :usuarioId")
+    List<Denuncia> findByIdUsuario(int usuarioId);
+
     @Query("SELECT * FROM denuncia WHERE protocolo LIKE :protocolo LIMIT 1")
     Denuncia findByProtocolo(String protocolo);
 

@@ -18,8 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ActivityPrincipal extends AppCompatActivity {
-    TextView textViewBemVindo;
-    ImageView imageViewAdmin;
+    private TextView textViewBemVindo;
+    private ImageView imageViewAdmin;
     private AppDatabase db;
 
     @Override
@@ -59,7 +59,8 @@ public class ActivityPrincipal extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.minhasDenuncias:
-                Toast.makeText(getApplicationContext(), "Minhas Denúncias.", Toast.LENGTH_SHORT).show();
+                Intent intent5 = new Intent(ActivityPrincipal.this, ActivityMinhasDenuncias.class);
+                startActivity(intent5);
                 break;
 
             case R.id.sair:
@@ -98,5 +99,10 @@ public class ActivityPrincipal extends AppCompatActivity {
     private void removeSessao() {
         ControleSessao controleSessao = new ControleSessao(ActivityPrincipal.this);
         controleSessao.removeSessao();
+    }
+
+    public void admin(View view) {
+        Intent intent2 = new Intent(ActivityPrincipal.this, ActivityAdmin.class);
+        startActivity(intent2);
     }
 }

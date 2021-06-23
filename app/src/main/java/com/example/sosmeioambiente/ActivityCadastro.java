@@ -45,6 +45,7 @@ public class ActivityCadastro extends AppCompatActivity {
                     u.setEmail(emailCadastro);
                     u.setSenha(senha1);
                     db.usuarioDao().insertAll(u);
+                    Log.i("cadastroUsuario: ", db.usuarioDao().getAll().toString());
                     Toast.makeText(ActivityCadastro.this, "Usuário Salvo.", Toast.LENGTH_SHORT).show();
                     navegaPrincipal();
                 } else {

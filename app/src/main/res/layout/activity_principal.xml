@@ -172,6 +172,7 @@
         android:src="@drawable/admin"
         android:id="@+id/imageViewAdmin"
         android:visibility="invisible"
+        android:onClick="admin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
