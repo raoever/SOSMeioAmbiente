@@ -26,8 +26,8 @@
         android:id="@+id/textViewBemVindo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:paddingBottom="50dp"
+        android:layout_marginTop="24dp"
+        android:paddingBottom="30dp"
         android:text="Bem vindo Anônimo!"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
@@ -166,5 +166,15 @@
 
     </TableRow>
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/admin"
+        android:id="@+id/imageViewAdmin"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableRow4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

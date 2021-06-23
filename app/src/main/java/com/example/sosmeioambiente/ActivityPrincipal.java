@@ -13,11 +13,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class ActivityPrincipal extends AppCompatActivity {
     TextView textViewBemVindo;
+    ImageView imageViewAdmin;
     private AppDatabase db;
 
     @Override
@@ -29,10 +31,13 @@ public class ActivityPrincipal extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("SOS Meio Ambiente");
         textViewBemVindo = findViewById(R.id.textViewBemVindo);
+        imageViewAdmin = findViewById(R.id.imageViewAdmin);
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "dbSosMeioAmbiente").allowMainThreadQueries().build();
 
         ControleSessao controleSessao = new ControleSessao(ActivityPrincipal.this);
         int idUsuario = controleSessao.pegaSessao();
+        if (idUsuario == 1)
+            imageViewAdmin.setVisibility(View.VISIBLE);
         if (idUsuario != -1){
             Usuario byId = db.usuarioDao().findById(idUsuario);
             textViewBemVindo.setText("Bem Vindo "+byId.getNome());
