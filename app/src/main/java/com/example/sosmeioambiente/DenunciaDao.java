@@ -26,7 +26,7 @@ public interface DenunciaDao {
     Denuncia findByProtocolo(String protocolo);
 
     @Update
-    void update(Denuncia p);
+    void update(Denuncia d);
 
     @Insert
     void insertAll(Denuncia... denuncias);

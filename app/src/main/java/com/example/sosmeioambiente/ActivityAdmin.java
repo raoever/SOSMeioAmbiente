@@ -38,7 +38,9 @@ public class ActivityAdmin extends AppCompatActivity implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String item = (String) parent.getItemAtPosition(position);
-//        abrirTela(item);
+        Denuncia denuncia = (Denuncia) parent.getItemAtPosition(position);
+        Intent it = new Intent(ActivityAdmin.this, ActivityAdminUpdate.class);
+        it.putExtra("dado", denuncia);
+        startActivity(it);
     }
 }
