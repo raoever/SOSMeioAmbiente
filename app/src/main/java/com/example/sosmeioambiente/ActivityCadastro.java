@@ -28,7 +28,7 @@ public class ActivityCadastro extends AppCompatActivity {
         editTextSenhaCadastro = findViewById(R.id.editTextTextSenhaCadastro);
         editTextSenha2 = findViewById(R.id.editTextSenha2);
         buttonCadastrar = findViewById(R.id.buttonCadastrar);
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "dbUsuario").allowMainThreadQueries().build();
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "dbSosMeioAmbiente").allowMainThreadQueries().build();
     }
 
     public void navegacaoCad(View view) {
@@ -59,7 +59,7 @@ public class ActivityCadastro extends AppCompatActivity {
     }
 
     private void navegaPrincipal() {
-        Intent intent3 = new Intent(ActivityCadastro.this, ActivityPrincipal.class);
+        Intent intent3 = new Intent(ActivityCadastro.this, MainActivity.class);
         startActivity(intent3);
     }
 }

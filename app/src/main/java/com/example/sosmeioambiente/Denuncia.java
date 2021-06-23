@@ -12,6 +12,8 @@ public class Denuncia implements Serializable {
     private int id;
     @ColumnInfo(name = "idUsuario")
     private int idUsuario;
+    @ColumnInfo(name = "protocolo")
+    private String protocolo;
     @ColumnInfo(name = "tipo")
     private String tipo;
     @ColumnInfo(name = "endereco")
@@ -22,18 +24,22 @@ public class Denuncia implements Serializable {
     private String latitude;
     @ColumnInfo(name = "longitude")
     private String longitude;
+    @ColumnInfo(name = "acompanhamento")
+    private String acompanhamento;
 
     public Denuncia() {
     }
 
-    public Denuncia(int id, int idUsuario, String tipo, String endereco, String descricao, String latitude, String longitude) {
+    public Denuncia(int id, int idUsuario, String protocolo, String tipo, String endereco, String descricao, String latitude, String longitude, String acompanhamento) {
         this.id = id;
         this.idUsuario = idUsuario;
+        this.protocolo = protocolo;
         this.tipo = tipo;
         this.endereco = endereco;
         this.descricao = descricao;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.acompanhamento = acompanhamento;
     }
 
     public int getId() {
@@ -92,16 +98,34 @@ public class Denuncia implements Serializable {
         this.idUsuario = idUsuario;
     }
 
+    public String getProtocolo() {
+        return protocolo;
+    }
+
+    public void setProtocolo(String protocolo) {
+        this.protocolo = protocolo;
+    }
+
+    public String getAcompanhamento() {
+        return acompanhamento;
+    }
+
+    public void setAcompanhamento(String acompanhamento) {
+        this.acompanhamento = acompanhamento;
+    }
+
     @Override
     public String toString() {
         return "Denuncia{" +
                 "id=" + id +
                 ", idUsuario=" + idUsuario +
+                ", protocolo='" + protocolo + '\'' +
                 ", tipo='" + tipo + '\'' +
                 ", endereco='" + endereco + '\'' +
                 ", descricao='" + descricao + '\'' +
                 ", latitude='" + latitude + '\'' +
                 ", longitude='" + longitude + '\'' +
+                ", acompanhamento='" + acompanhamento + '\'' +
                 '}';
     }
 }

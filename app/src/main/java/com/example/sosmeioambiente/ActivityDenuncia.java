@@ -1,42 +1,127 @@
 package com.example.sosmeioambiente;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.room.Room;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class ActivityDenuncia extends AppCompatActivity {
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+public class ActivityDenuncia extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private Spinner spinner;
+    private EditText editTextEndereco, editTextDescricao;
     private TextView textViewLatitude, textViewLongitude;
     private LocationManager locationManager;
+    private String tipo;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private Bitmap imageBitmap;
+    private ImageView ivFoto;
+    private AppDatabase db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_denuncia);
 
+        editTextEndereco = findViewById(R.id.editTextEndereco);
+        editTextDescricao = findViewById(R.id.editTextDescricao);
+        ivFoto = findViewById(R.id.ivFoto);
         spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipos, android.R.layout.simple_list_item_1);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-//        spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        spinner.setOnItemSelectedListener(this);
         textViewLatitude = findViewById(R.id.textViewLatitude);
         textViewLongitude = findViewById(R.id.textViewLongitude);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "dbSosMeioAmbiente").allowMainThreadQueries().build();
 
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            imageBitmap = (Bitmap) extras.get("data");
+            ivFoto.setImageBitmap(imageBitmap);
+
+            String state = Environment.getExternalStorageState();
+            if (Environment.MEDIA_MOUNTED.equals(state)) {
+                File file = new File("/sdcard/Pictures/"+"minhaFoto.jpg");
+                OutputStream fos = null;
+                try {
+                    fos = new FileOutputStream(file);
+                    imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                    fos.flush();
+                    fos.close();
+
+                } catch (IOException e) {
+
+                }
+            }
+        }
+    }
+
+    public void denunciar(View view) {
+        Denuncia d = new Denuncia();
+        ControleSessao controleSessao = new ControleSessao(ActivityDenuncia.this);
+        d.setIdUsuario(controleSessao.pegaSessao());
+//        d.setTipo(spinner.getSelectedItem().toString());
+        d.setTipo(tipo);
+//        Toast.makeText(ActivityDenuncia.this, tipo, Toast.LENGTH_SHORT).show();
+        d.setEndereco(editTextEndereco.getText().toString());
+        d.setLatitude(textViewLatitude.getText().toString());
+        d.setLongitude(textViewLongitude.getText().toString());
+        d.setDescricao(editTextDescricao.getText().toString());
+        Long tsLong = System.currentTimeMillis()/1000;
+        d.setProtocolo(tsLong.toString());
+        Log.i("protocolo: ", tsLong.toString());
+        db.denunciaDao().insertAll(d);
+
+        Intent intent = new Intent(ActivityDenuncia.this, ActivityDenunciaProt.class);
+        intent.putExtra("protocolo", tsLong.toString());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        tipo = (String) parent.getItemAtPosition(position);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        tipo = "Não Selecionado";
+    }
+
+    public void pegaGps(View view) {
         //Pegar GPS
         if (ContextCompat.checkSelfPermission(ActivityDenuncia.this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(ActivityDenuncia.this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
@@ -51,8 +136,8 @@ public class ActivityDenuncia extends AppCompatActivity {
         });
     }
 
-    public void navegacaoCadDen(View view) {
-        Intent intent = new Intent(ActivityDenuncia.this, ActivityDenunciaProt.class);
-        startActivity(intent);
+    public void tiraFoto(View view) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
     }
 }

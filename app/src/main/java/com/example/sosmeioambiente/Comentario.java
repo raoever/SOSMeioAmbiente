@@ -1,8 +1,10 @@
 package com.example.sosmeioambiente;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+@Entity
 public class Comentario {
     @PrimaryKey(autoGenerate = true)
     private int id;

@@ -29,7 +29,7 @@ public class ActivityPrincipal extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("SOS Meio Ambiente");
         textViewBemVindo = findViewById(R.id.textViewBemVindo);
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "dbUsuario").allowMainThreadQueries().build();
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "dbSosMeioAmbiente").allowMainThreadQueries().build();
 
         ControleSessao controleSessao = new ControleSessao(ActivityPrincipal.this);
         int idUsuario = controleSessao.pegaSessao();

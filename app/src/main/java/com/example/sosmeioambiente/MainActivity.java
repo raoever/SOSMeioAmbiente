@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         buttonEntrar = findViewById(R.id.buttonEntrar);
         textViewCadastro = findViewById(R.id.textViewCadastro);
         textViewAnonimo = findViewById(R.id.textViewAnonimo);
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "dbUsuario").allowMainThreadQueries().build();
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "dbSosMeioAmbiente").allowMainThreadQueries().build();
     }
 
     @Override
