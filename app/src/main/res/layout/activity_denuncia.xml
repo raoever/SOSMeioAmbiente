@@ -118,6 +118,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:text="Upload Foto"
+        android:onClick="pegaFoto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageViewCamera"
@@ -125,7 +126,7 @@
 
 
     <ImageView
-        android:id="@+id/ivFoto"
+        android:id="@+id/ivImagem"
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:layout_constraintEnd_toEndOf="parent"

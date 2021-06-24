@@ -123,6 +123,6 @@ public class Denuncia implements Serializable {
                 "Descricao= " + descricao + '\n' +
                 "Latitude= " + latitude + '\n' +
                 "Longitude= " + longitude + '\n' +
-                "Acompanhamento= " + acompanhamento;
+                "Acompanhamento:\n" + acompanhamento;
     }
 }

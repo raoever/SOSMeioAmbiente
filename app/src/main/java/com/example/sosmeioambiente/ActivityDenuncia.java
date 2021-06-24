@@ -10,10 +10,13 @@ import androidx.room.Room;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -32,7 +35,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class ActivityDenuncia extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class ActivityDenuncia extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Spinner spinner;
     private EditText editTextEndereco, editTextDescricao;
     private TextView textViewLatitude, textViewLongitude;
@@ -40,18 +43,30 @@ public class ActivityDenuncia extends AppCompatActivity implements AdapterView.O
     private String tipo;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private Bitmap imageBitmap;
-    private ImageView ivFoto;
+    private ImageView ivImagem;
     private AppDatabase db;
-
+    private static final int PERMISSAO_REQUEST = 3;
+    private static final int GALERIA_IMAGENS = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_denuncia);
 
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)){
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PERMISSAO_REQUEST);
+            }
+        }
         editTextEndereco = findViewById(R.id.editTextEndereco);
         editTextDescricao = findViewById(R.id.editTextDescricao);
-        ivFoto = findViewById(R.id.ivFoto);
+        ivImagem = findViewById(R.id.ivImagem);
         spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapterSninner = ArrayAdapter.createFromResource(this, R.array.tipos, android.R.layout.simple_list_item_1);
         adapterSninner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -72,11 +87,11 @@ public class ActivityDenuncia extends AppCompatActivity implements AdapterView.O
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             imageBitmap = (Bitmap) extras.get("data");
-            ivFoto.setImageBitmap(imageBitmap);
+            ivImagem.setImageBitmap(imageBitmap);
 
             String state = Environment.getExternalStorageState();
             if (Environment.MEDIA_MOUNTED.equals(state)) {
-                File file = new File("/sdcard/Pictures/"+"minhaFoto.jpg");
+                File file = new File("/sdcard/Pictures/" + "minhaFoto.jpg");
                 OutputStream fos = null;
                 try {
                     fos = new FileOutputStream(file);
@@ -88,6 +103,29 @@ public class ActivityDenuncia extends AppCompatActivity implements AdapterView.O
 
                 }
             }
+        }
+        if(requestCode == GALERIA_IMAGENS && resultCode == RESULT_OK){
+            Uri selectedImage = data.getData();
+            String[] filePath = {MediaStore.Images.Media.DATA};
+            Cursor c = getContentResolver().query(selectedImage, filePath, null, null, null);
+            c.moveToFirst();
+            int columnIndex = c.getColumnIndex(filePath[0]);
+            String picturePath = c.getString(columnIndex);
+            c.close();
+            Bitmap imagemGaleria = (BitmapFactory.decodeFile(picturePath));
+            ivImagem.setImageBitmap(imagemGaleria);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == PERMISSAO_REQUEST){
+            if(grantResults.length < 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+            } else {
+
+            }
+            return;
         }
     }
 
@@ -102,7 +140,7 @@ public class ActivityDenuncia extends AppCompatActivity implements AdapterView.O
         d.setLatitude(textViewLatitude.getText().toString());
         d.setLongitude(textViewLongitude.getText().toString());
         d.setDescricao(editTextDescricao.getText().toString());
-        Long tsLong = System.currentTimeMillis()/1000;
+        Long tsLong = System.currentTimeMillis() / 1000;
         d.setProtocolo(tsLong.toString());
         Log.i("protocolo: ", tsLong.toString());
         db.denunciaDao().insertAll(d);
@@ -124,8 +162,8 @@ public class ActivityDenuncia extends AppCompatActivity implements AdapterView.O
 
     public void pegaGps(View view) {
         //Pegar GPS
-        if (ContextCompat.checkSelfPermission(ActivityDenuncia.this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(ActivityDenuncia.this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(ActivityDenuncia.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(ActivityDenuncia.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(ActivityDenuncia.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 1, new LocationListener() {
@@ -140,5 +178,10 @@ public class ActivityDenuncia extends AppCompatActivity implements AdapterView.O
     public void tiraFoto(View view) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+    }
+
+    public void pegaFoto(View view) {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, GALERIA_IMAGENS);
     }
 }

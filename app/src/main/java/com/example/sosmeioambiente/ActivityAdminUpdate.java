@@ -35,9 +35,16 @@ public class ActivityAdminUpdate extends AppCompatActivity {
     }
 
     public void update(View view) {
-        String update = editTextUpdate.getText().toString() + "\n";
+        String update = d.getAcompanhamento();
+        update += editTextUpdate.getText().toString() + "\n";
         d.setAcompanhamento(update);
         db.denunciaDao().update(d);
+        Intent intent = new Intent(ActivityAdminUpdate.this, ActivityAdmin.class);
+        startActivity(intent);
+    }
+
+    public void deleta(View view) {
+        db.denunciaDao().delete(d);
         Intent intent = new Intent(ActivityAdminUpdate.this, ActivityAdmin.class);
         startActivity(intent);
     }
