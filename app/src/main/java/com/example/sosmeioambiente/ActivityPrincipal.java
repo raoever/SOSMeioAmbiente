@@ -39,8 +39,10 @@ public class ActivityPrincipal extends AppCompatActivity {
         if (idUsuario == 1)
             imageViewAdmin.setVisibility(View.VISIBLE);
         if (idUsuario != -1){
-            Usuario byId = db.usuarioDao().findById(idUsuario);
-            textViewBemVindo.setText("Bem Vindo "+byId.getNome());
+            if (db.usuarioDao().findById(idUsuario) != null){
+                Usuario byId = db.usuarioDao().findById(idUsuario);
+                textViewBemVindo.setText("Bem Vindo "+byId.getNome());
+            }
         } else {
 //            toolbar.getMenu().findItem(R.id.minhasDenuncias).setVisible(false);
         }

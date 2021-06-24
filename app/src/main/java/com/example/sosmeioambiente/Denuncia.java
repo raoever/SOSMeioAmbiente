@@ -26,11 +26,13 @@ public class Denuncia implements Serializable {
     private String longitude;
     @ColumnInfo(name = "acompanhamento")
     private String acompanhamento;
+    @ColumnInfo(name = "imagem_denuncia")
+    private byte[] imagem_denuncia;
 
     public Denuncia() {
     }
 
-    public Denuncia(int id, int idUsuario, String protocolo, String tipo, String endereco, String descricao, String latitude, String longitude, String acompanhamento) {
+    public Denuncia(int id, int idUsuario, String protocolo, String tipo, String endereco, String descricao, String latitude, String longitude, String acompanhamento, byte[] imagem_denuncia) {
         this.id = id;
         this.idUsuario = idUsuario;
         this.protocolo = protocolo;
@@ -40,6 +42,7 @@ public class Denuncia implements Serializable {
         this.latitude = latitude;
         this.longitude = longitude;
         this.acompanhamento = acompanhamento;
+        this.imagem_denuncia = imagem_denuncia;
     }
 
     public int getId() {
@@ -114,6 +117,14 @@ public class Denuncia implements Serializable {
         this.acompanhamento = acompanhamento;
     }
 
+    public byte[] getImagem_denuncia() {
+        return imagem_denuncia;
+    }
+
+    public void setImagem_denuncia(byte[] imagem_denuncia) {
+        this.imagem_denuncia = imagem_denuncia;
+    }
+
     @Override
     public String toString() {
         return "Id= " + idUsuario + '\n' +
@@ -123,6 +134,7 @@ public class Denuncia implements Serializable {
                 "Descricao= " + descricao + '\n' +
                 "Latitude= " + latitude + '\n' +
                 "Longitude= " + longitude + '\n' +
+                "Imagem Denúncia= " +imagem_denuncia + '\n' +
                 "Acompanhamento:\n" + acompanhamento;
     }
 }

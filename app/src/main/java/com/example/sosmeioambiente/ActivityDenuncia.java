@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -30,6 +31,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -133,9 +135,7 @@ public class ActivityDenuncia extends AppCompatActivity implements AdapterView.O
         Denuncia d = new Denuncia();
         ControleSessao controleSessao = new ControleSessao(ActivityDenuncia.this);
         d.setIdUsuario(controleSessao.pegaSessao());
-//        d.setTipo(spinner.getSelectedItem().toString());
         d.setTipo(tipo);
-//        Toast.makeText(ActivityDenuncia.this, tipo, Toast.LENGTH_SHORT).show();
         d.setEndereco(editTextEndereco.getText().toString());
         d.setLatitude(textViewLatitude.getText().toString());
         d.setLongitude(textViewLongitude.getText().toString());
@@ -143,6 +143,11 @@ public class ActivityDenuncia extends AppCompatActivity implements AdapterView.O
         Long tsLong = System.currentTimeMillis() / 1000;
         d.setProtocolo(tsLong.toString());
         Log.i("protocolo: ", tsLong.toString());
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        Bitmap imagemTela = ((BitmapDrawable) ivImagem.getDrawable()).getBitmap();
+        imagemTela.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte imagemBytes[] = stream.toByteArray();
+        d.setImagem_denuncia(imagemBytes);
         db.denunciaDao().insertAll(d);
 
         Intent intent = new Intent(ActivityDenuncia.this, ActivityDenunciaProt.class);
