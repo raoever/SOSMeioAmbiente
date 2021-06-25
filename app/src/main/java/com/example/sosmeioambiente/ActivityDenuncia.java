@@ -145,7 +145,7 @@ public class ActivityDenuncia extends AppCompatActivity implements AdapterView.O
         Log.i("protocolo: ", tsLong.toString());
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         Bitmap imagemTela = ((BitmapDrawable) ivImagem.getDrawable()).getBitmap();
-        imagemTela.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        imagemTela.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte imagemBytes[] = stream.toByteArray();
         d.setImagem_denuncia(imagemBytes);
         db.denunciaDao().insertAll(d);
